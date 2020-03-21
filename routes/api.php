@@ -15,17 +15,33 @@ use Illuminate\Http\Request;
 
 Route::post('login', 'AuthController@login');
 Route::get('/testimonials', 'TestimonialsController@indexActive');
+Route::get('/featured-properties', 'FeaturedPropertiesController@indexActive');
+Route::get('/properties', 'PropertiesController@indexActive');
 
 Route::group(['middleware' => 'auth:api'], function() {
   Route::get('user', 'AuthController@user');
 
   Route::group(['prefix' => 'admin'], function() {
+    Route::group(['prefix' => 'properties'], function() {
+      Route::get('/', 'PropertiesController@index');
+      Route::get('/not-sold', 'PropertiesController@indexNotSold');
+      Route::post('/', 'PropertiesController@store');
+      Route::put('/{property}', 'PropertiesController@update');
+      Route::get('/{property}', 'PropertiesController@show');
+      Route::delete('/{property}', 'PropertiesController@destroy');
+    });
     Route::group(['prefix' => 'testimonials'], function() {
       Route::get('/', 'TestimonialsController@index');
       Route::post('/', 'TestimonialsController@store');
       Route::put('/{testimonial}', 'TestimonialsController@update');
       Route::get('/{testimonial}', 'TestimonialsController@show');
       Route::delete('/{testimonial}', 'TestimonialsController@destroy');
+    });
+    Route::group(['prefix' => 'featured-properties'], function() {
+      Route::get('/', 'FeaturedPropertiesController@index');
+      Route::post('/', 'FeaturedPropertiesController@store');
+      // Route::get('/{property}', 'FeaturedPropertiesController@show');
+      Route::post('/{property}', 'FeaturedPropertiesController@destroy');
     });
   });
 });
