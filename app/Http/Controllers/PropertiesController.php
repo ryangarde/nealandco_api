@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Property;
+use App\PropertyStatus;
+use App\PropertyType;
+use Illuminate\Http\Request;
 
 class PropertiesController extends Controller
 {
@@ -14,7 +16,7 @@ class PropertiesController extends Controller
 
   public function indexActive()
   {
-    return Property::where('isActive',1)->get();
+    return Property::where('isActive',1)->paginate(9);
   }
 
   public function indexNotSold()
@@ -41,5 +43,54 @@ class PropertiesController extends Controller
   public function destroy(Property $property)
   {
     $property->delete();
+  }
+
+  public function getTypes()
+  {
+    return PropertyType::pluck('name');
+  }
+
+  public function getStatuses()
+  {
+    return PropertyStatus::pluck('name');
+  }
+
+  public function getPrices()
+  {
+    $query = "CAST(price AS DECIMAL(10,2))";
+    $prices = Property::orderByRaw($query)->get();
+
+    for($i = 0; $i < count($prices); $i++) {
+      if($i == 0) {
+        $minPrice = floor($prices[$i]['price'] / 1000000);
+      } else if($i == count($prices) - 1) {
+        $maxPrice = ceil($prices[$i]['price'] / 1000000);
+      }
+    }
+
+    return ['minPrice' => $minPrice, 'maxPrice' => $maxPrice];
+  }
+
+  public function search(Request $request)
+  {
+    $properties = Property::where('primaryAddress','like','%'.$request->location.'%')
+    ->orWhere('secondaryAddress','like','%'.$request->location.'%');
+
+    if($request->status) 
+      $properties = $properties->where('status', $request->status);
+
+    if($request->type) 
+      $properties = $properties->where('type', $request->type);
+
+    if($request->lotArea) 
+      $properties = $properties->where('lotArea', $request->lotArea);
+
+    if($request->bedrooms) 
+      $properties = $properties->where('bedrooms', $request->bedrooms);
+
+    if($request->price) 
+      $properties = $properties->whereBetween('price', [$request->minPrice, $request->maxPrice]);
+
+    return $properties->paginate(9);
   }
 }

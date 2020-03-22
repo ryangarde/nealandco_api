@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
         PropertySeeder::class,
         PropertySeeder::class,
         PropertySeeder::class,
-      ]);
-    }
+        PropertyTypeSeeder::class,
+        PropertyStatusSeeder::class,
+    ]);
   }
+}

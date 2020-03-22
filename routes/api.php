@@ -17,6 +17,13 @@ Route::post('login', 'AuthController@login');
 Route::get('/testimonials', 'TestimonialsController@indexActive');
 Route::get('/featured-properties', 'FeaturedPropertiesController@indexActive');
 Route::get('/properties', 'PropertiesController@indexActive');
+Route::get('/properties/types', 'PropertiesController@getTypes');
+Route::get('/properties/statuses', 'PropertiesController@getStatuses');
+Route::get('/properties/prices', 'PropertiesController@getPrices');
+Route::post('/properties/search', 'PropertiesController@search');
+Route::post('/mail/offer-property', 'MailController@offerProperty');
+Route::post('/mail/book-a-viewing', 'MailController@bookAViewing');
+Route::post('/mail/inquire-properties', 'MailController@inquireProperties');
 
 Route::group(['middleware' => 'auth:api'], function() {
   Route::get('user', 'AuthController@user');
