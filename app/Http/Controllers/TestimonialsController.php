@@ -14,7 +14,7 @@ class TestimonialsController extends Controller
 
   public function indexActive()
   {
-    return Testimonial::where('isActive',1)->get();
+    return Testimonial::where('isActive',1)->get()->take(9);
   }
 
   public function store()

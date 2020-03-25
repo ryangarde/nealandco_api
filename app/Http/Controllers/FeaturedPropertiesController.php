@@ -14,7 +14,7 @@ class FeaturedPropertiesController extends Controller
 
   public function indexActive()
   {
-    return Property::where([['isActive',1],['isSold',0],['isChosen',1]])->get();
+    return Property::where([['isActive',1],['isSold',0],['isChosen',1]])->with('propertyImages')->get();
   }
 
   public function store()

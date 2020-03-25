@@ -21,7 +21,12 @@ class PropertiesController extends Controller
 
   public function indexNotSold()
   {
-    return Property::where([['isActive',1],['isSold',0]])->get();
+    return Property::where([['isActive',1],['isSold',0]])->with('propertyImages')->paginate(9);
+  }
+
+  public function indexNotSoldNoPaginate()
+  {
+    return Property::where([['isActive',1],['isSold',0]])->with('propertyImages')->get();
   }
 
   public function store()
@@ -92,5 +97,14 @@ class PropertiesController extends Controller
       $properties = $properties->whereBetween('price', [$request->minPrice, $request->maxPrice]);
 
     return $properties->paginate(9);
+  }
+
+  public function propertySold(Property $property)
+  {
+    if ($property->isSold == 1)
+      $property->fill(['isSold' => 0])->save();
+    else
+      $property->fill(['isSold' => 1])->save();
+    return $property;
   }
 }
