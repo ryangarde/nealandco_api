@@ -6,6 +6,7 @@ use App\Property;
 use App\PropertyStatus;
 use App\PropertyType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PropertiesController extends Controller
 {
@@ -31,7 +32,11 @@ class PropertiesController extends Controller
 
   public function store()
   {
-    return Property::create(request()->all());
+    $property = Property::create(request()->all());
+    $path = Storage::putFile('public/property_images', request()->file('image'));
+    $propertyImage = $property->propertyImages()->create(['name' => str_replace("public/","",$path)]);
+
+    return response()->json(['property' => $property,'propertyImage' => $propertyImage]);
   }
 
   public function show(Property $property)
@@ -79,7 +84,8 @@ class PropertiesController extends Controller
   public function search(Request $request)
   {
     $properties = Property::where('primaryAddress','like','%'.$request->location.'%')
-    ->orWhere('secondaryAddress','like','%'.$request->location.'%');
+    ->orWhere('secondaryAddress','like','%'.$request->location.'%')
+    ->with('propertyImages');
 
     if($request->status) 
       $properties = $properties->where('status', $request->status);
