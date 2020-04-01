@@ -83,15 +83,19 @@ class PropertiesController extends Controller
 
   public function search(Request $request)
   {
-    $properties = Property::where('primaryAddress','like','%'.$request->location.'%')
-    ->orWhere('secondaryAddress','like','%'.$request->location.'%')
-    ->with('propertyImages');
+    // return $request->type;
+    $properties = Property::with('propertyImages');
+
+    if($request->location) {
+      $properties = $properties->where('primaryAddress','like','%'.$request->location.'%')
+      ->orWhere('secondaryAddress','like','%'.$request->location.'%');
+    }
 
     if($request->status) 
       $properties = $properties->where('status', $request->status);
 
     if($request->type) 
-      $properties = $properties->where('type', $request->type);
+      $properties = $properties->whereIn('type', $request->type);
 
     if($request->lotArea) 
       $properties = $properties->where('lotArea', $request->lotArea);
