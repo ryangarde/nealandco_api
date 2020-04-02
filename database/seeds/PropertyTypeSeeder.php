@@ -12,6 +12,7 @@ class PropertyTypeSeeder extends Seeder
       ['name' => 'Single Detached'],
       ['name' => 'Townhouse'],
       ['name' => 'Condominium'],
+      ['name' => 'House & Lot'],
       ['name' => 'Warehouse/Industrial'],
       ['name' => 'Commercial Property'],
       ['name' => 'Vacant Lot'],

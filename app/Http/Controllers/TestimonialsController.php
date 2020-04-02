@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-
 use App\Testimonial;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TestimonialsController extends Controller
 {
@@ -17,10 +17,17 @@ class TestimonialsController extends Controller
     return Testimonial::where('isActive',1)->get()->take(9);
   }
 
-  public function store()
+  public function store(Request $request)
   {
-    request()['roundedValue'] = ceil(request()->stars);
-    return Testimonial::create(request()->all());
+    $path = Storage::putFile('public/testimonial_images', request()->file('image'));
+    
+    return Testimonial::create([
+      'name' => $request->name,
+      'description' => $request->description,
+      'stars' => $request->stars,
+      'roundedValue' => ceil(request()->stars),
+      'image' => str_replace("public/","",$path),
+    ]);
   }
 
   public function show(Testimonial $testimonial)

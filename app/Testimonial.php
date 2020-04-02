@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Testimonial extends Model
 {
-  protected $fillable = ['name','description','stars','isActive','roundedValue'];
+  protected $fillable = ['name','image','description','stars','isActive','roundedValue'];
 }
