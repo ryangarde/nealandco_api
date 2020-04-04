@@ -47,8 +47,9 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::group(['prefix' => 'testimonials'], function() {
       Route::get('/', 'TestimonialsController@index');
       Route::post('/', 'TestimonialsController@store');
-      Route::put('/{testimonial}', 'TestimonialsController@update');
       Route::get('/{testimonial}', 'TestimonialsController@show');
+      Route::put('/{testimonial}', 'TestimonialsController@update');
+      Route::post('/{testimonial}/image', 'TestimonialsController@updateImage');
       Route::delete('/{testimonial}', 'TestimonialsController@destroy');
     });
 
@@ -57,6 +58,11 @@ Route::group(['middleware' => 'auth:api'], function() {
       Route::post('/', 'FeaturedPropertiesController@store');
       // Route::get('/{property}', 'FeaturedPropertiesController@show');
       Route::post('/{property}', 'FeaturedPropertiesController@destroy');
+    });
+
+    Route::group(['prefix' => 'settings'], function() {
+      Route::get('/', 'SettingsController@show');
+      Route::post('/set-email-receiver', 'SettingsController@setEmailReceiver');
     });
   });
 });

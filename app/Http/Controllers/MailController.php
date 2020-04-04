@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\BookAViewing;
 use App\Mail\InquireProperties;
 use App\Mail\OfferProperty;
+use App\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -12,13 +13,13 @@ class MailController extends Controller
 {
   public function offerProperty()
   {
-    Mail::to(env('MAIL_USERNAME'))->send(new OfferProperty(request()));
+    Mail::to(Settings::find(1)->emailReceiver)->send(new OfferProperty(request()));
     return response()->json(['message' => 'Email sent!', 'status' => true]);
   }
 
   public function bookAViewing()
   {
-    Mail::to(env('MAIL_USERNAME'))->send(new BookAViewing(request()));
+    Mail::to(Settings::find(1)->emailReceiver)->send(new BookAViewing(request()));
     return response()->json(['message' => 'Email sent!', 'status' => true]);
   }
 
@@ -42,7 +43,7 @@ class MailController extends Controller
       ]);
     }
 
-    Mail::to(env('MAIL_USERNAME'))->send(new InquireProperties(request()));
+    Mail::to(Settings::find(1)->emailReceiver)->send(new InquireProperties(request()));
     return response()->json(['message' => 'Email sent!', 'status' => true]);
   }
 }

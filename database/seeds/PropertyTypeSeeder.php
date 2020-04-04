@@ -8,7 +8,6 @@ class PropertyTypeSeeder extends Seeder
   public function run()
   {
     $propertyTypes = [
-      ['name' => 'Any'],
       ['name' => 'Single Detached'],
       ['name' => 'Townhouse'],
       ['name' => 'Condominium'],

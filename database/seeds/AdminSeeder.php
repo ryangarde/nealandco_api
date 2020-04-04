@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
+use App\Settings;
 use App\User;
+use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
 {
@@ -12,11 +13,13 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-      User::create([
-        'name' => 'Admin',
-        'email' => 'admin@gmail.com',
-        'password' => Hash::make('123456'),
-        'role_id' => 1,
-      ]);
+        $user = User::create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('123456'),
+            'role_id' => 1,
+        ]);
+
+        Settings::create(['user_id' => $user->id]);
     }
-  }
+}

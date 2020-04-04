@@ -35,9 +35,18 @@ class TestimonialsController extends Controller
     return $testimonial;
   }
 
-  public function update(Testimonial $testimonial)
+  public function update(Testimonial $testimonial, Request $request)
   {
-    $testimonial->fill(request()->all())->save();
+    $testimonial->fill($request->all())->save();
+
+    return $testimonial;
+  }
+
+  public function updateImage(Testimonial $testimonial)
+  {
+    $path = Storage::putFile('public/testimonial_images', request()->file('image'));
+    $testimonial->fill(['image' => str_replace("public/","",$path)])->save();
+
     return $testimonial;
   }
 
