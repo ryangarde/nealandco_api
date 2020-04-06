@@ -86,7 +86,6 @@ class PropertiesController extends Controller
 
   public function search(Request $request)
   {
-    // return $request->type;
     $properties = Property::with('propertyImages');
 
     if($request->location) {
@@ -101,7 +100,7 @@ class PropertiesController extends Controller
       $properties = $properties->whereIn('type', $request->type);
 
     if($request->lotArea) 
-      $properties = $properties->where('lotArea', $request->lotArea);
+      $properties = $properties->whereBetween('lotArea', [$request->lotArea - 100, $request->lotArea + 100]);
 
     if($request->bedrooms) 
       $properties = $properties->where('bedrooms', $request->bedrooms);
