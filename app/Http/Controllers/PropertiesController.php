@@ -30,6 +30,14 @@ class PropertiesController extends Controller
     return Property::where([['isActive',1],['isSold',0]])->with('propertyImages')->get();
   }
 
+  public function indexSoldNoPaginate()
+  {
+    $soldProperties = Property::select('propertyNumber','price')->where([['isActive',1],['isSold',1]])->get();
+    $totalProperties = Property::select('propertyNumber','price')->where('isActive',1)->get();
+
+    return response()->json(['soldProperties' => $soldProperties,'totalProperties' => $totalProperties]);
+  }
+
   public function store()
   {
     $property = Property::create(request()->all());
@@ -81,6 +89,11 @@ class PropertiesController extends Controller
       }
     }
 
+    if(count($prices) == 0) {
+      return null;
+    } else if(count($prices) == 1) {
+      $maxPrice = 1;
+    }
     return ['minPrice' => $minPrice, 'maxPrice' => $maxPrice];
   }
 

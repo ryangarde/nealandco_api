@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth:api'], function() {
       Route::post('/{property}/images', 'PropertyImagesController@store');
       Route::get('/{property}/images', 'PropertyImagesController@index');
       Route::get('/not-sold', 'PropertiesController@indexNotSoldNoPaginate');
+      Route::get('/sold', 'PropertiesController@indexSoldNoPaginate');
       Route::get('/{property}', 'PropertiesController@show');
       Route::post('/{property}', 'PropertiesController@propertySold');
       Route::put('/{property}', 'PropertiesController@update');
@@ -56,7 +57,6 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::group(['prefix' => 'featured-properties'], function() {
       Route::get('/', 'FeaturedPropertiesController@index');
       Route::post('/', 'FeaturedPropertiesController@store');
-      // Route::get('/{property}', 'FeaturedPropertiesController@show');
       Route::post('/{property}', 'FeaturedPropertiesController@destroy');
     });
 

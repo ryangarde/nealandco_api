@@ -1,7 +1,7 @@
 <html>
 <body>
-  Address Line 1: {{$request->secondaryAddress}}<br>
-  Address Line 2: {{$request->primaryAddress}}<br>
+  Address Line 1: {{$request->primaryAddress}}<br>
+  Address Line 2: {{$request->secondaryAddress}}<br>
   Area/District/Barangay: {{$request->barangay}}<br>
   City: {{$request->city}}<br>
   Region: {{$request->region}}<br>
