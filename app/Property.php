@@ -14,4 +14,9 @@ class Property extends Model
   {
     return $this->hasMany(PropertyImage::class);
   }
+
+  public function amenities()
+  {
+    return $this->hasMany(Amenity::class);
+  }
 }

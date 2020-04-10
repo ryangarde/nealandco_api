@@ -23,6 +23,7 @@ Route::get('/properties/prices', 'PropertiesController@getPrices');
 Route::post('/properties/search', 'PropertiesController@search');
 Route::get('/properties/{property}', 'PropertiesController@show');
 Route::get('/properties/{property}/images', 'PropertyImagesController@index');
+Route::get('/properties/{property}/amenities', 'AmenitiesController@index');
 Route::post('/mail/offer-property', 'MailController@offerProperty');
 Route::post('/mail/book-a-viewing', 'MailController@bookAViewing');
 Route::post('/mail/inquire-properties', 'MailController@inquireProperties');
@@ -35,8 +36,13 @@ Route::group(['middleware' => 'auth:api'], function() {
       Route::delete('/{property}/images/{propertyImage}', 'PropertyImagesController@destroy');
       Route::post('/{property}/images', 'PropertyImagesController@store');
       Route::get('/{property}/images', 'PropertyImagesController@index');
+
+      Route::post('/{property}/amenities', 'AmenitiesController@store');
+      Route::delete('/{property}/amenities/{amenity}', 'AmenitiesController@destroy');
+
       Route::get('/not-sold', 'PropertiesController@indexNotSoldNoPaginate');
       Route::get('/sold', 'PropertiesController@indexSoldNoPaginate');
+
       Route::get('/{property}', 'PropertiesController@show');
       Route::post('/{property}', 'PropertiesController@propertySold');
       Route::put('/{property}', 'PropertiesController@update');
