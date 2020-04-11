@@ -10,16 +10,16 @@ class DashboardController extends Controller
   public function propertiesSold()
   {
     $soldProperties = Property::select('propertyNumber','price')->where([['isActive',1],['isSold',1],['status','Sale']])->get();
-    $totalProperties = Property::select('propertyNumber','price')->where('isActive',1)->get();
+    $totalSaleProperties = Property::select('propertyNumber','price')->where([['isActive',1],['status','Sale']])->get();
 
-    return response()->json(['soldProperties' => $soldProperties,'totalProperties' => $totalProperties]);
+    return response()->json(['soldProperties' => $soldProperties,'totalSaleProperties' => $totalSaleProperties]);
   }
 
   public function propertiesLeased()
   {
     $leasedProperties = Property::select('propertyNumber','price')->where([['isActive',1],['isSold',1],['status','Rent']])->get();
-    $totalProperties = Property::select('propertyNumber','price')->where('isActive',1)->get();
+    $totalRentProperties = Property::select('propertyNumber','price')->where([['isActive',1],['status','Rent']])->get();
 
-    return response()->json(['leasedProperties' => $leasedProperties,'totalProperties' => $totalProperties]);
+    return response()->json(['leasedProperties' => $leasedProperties,'totalRentProperties' => $totalRentProperties]);
   }
 }
