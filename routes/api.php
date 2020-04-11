@@ -27,6 +27,7 @@ Route::get('/properties/{property}/amenities', 'AmenitiesController@index');
 Route::post('/mail/offer-property', 'MailController@offerProperty');
 Route::post('/mail/book-a-viewing', 'MailController@bookAViewing');
 Route::post('/mail/inquire-properties', 'MailController@inquireProperties');
+Route::get('/settings', 'SettingsController@show');
 
 Route::group(['middleware' => 'auth:api'], function() {
   Route::get('user', 'AuthController@user');
@@ -41,7 +42,9 @@ Route::group(['middleware' => 'auth:api'], function() {
       Route::delete('/{property}/amenities/{amenity}', 'AmenitiesController@destroy');
 
       Route::get('/not-sold', 'PropertiesController@indexNotSoldNoPaginate');
-      Route::get('/sold', 'PropertiesController@indexSoldNoPaginate');
+
+      Route::get('/sold', 'DashboardController@propertiesSold');
+      Route::get('/leased', 'DashboardController@propertiesLeased');
 
       Route::get('/{property}', 'PropertiesController@show');
       Route::post('/{property}', 'PropertiesController@propertySold');
@@ -69,6 +72,11 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::group(['prefix' => 'settings'], function() {
       Route::get('/', 'SettingsController@show');
       Route::post('/set-email-receiver', 'SettingsController@setEmailReceiver');
+      Route::post('/set-facebook-link', 'SettingsController@setFacebookLink');
+      Route::post('/set-youtube-link', 'SettingsController@setYoutubeLink');
+      Route::post('/set-instagram-link', 'SettingsController@setInstagramLink');
+      Route::post('/set-twitter-link', 'SettingsController@setTwitterLink');
+      Route::post('/set-linkedin-link', 'SettingsController@setLinkedInLink');
     });
   });
 });

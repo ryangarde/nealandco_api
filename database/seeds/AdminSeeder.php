@@ -19,7 +19,5 @@ class AdminSeeder extends Seeder
             'password' => Hash::make('123456'),
             'role_id' => 1,
         ]);
-
-        Settings::create(['user_id' => $user->id]);
     }
 }
