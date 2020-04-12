@@ -37,7 +37,12 @@ class TestimonialsController extends Controller
 
   public function update(Testimonial $testimonial, Request $request)
   {
-    $testimonial->fill($request->all())->save();
+    $testimonial->fill([
+      'name' => $request->name,
+      'description' => $request->description,
+      'stars' => $request->stars,
+      'roundedValue' => ceil(request()->stars)
+    ])->save();
 
     return $testimonial;
   }

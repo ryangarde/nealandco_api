@@ -18,10 +18,10 @@ class PropertyImagesController extends Controller
   {
     for ($i=0; $i < count(request()->image); $i++) { 
       $path = Storage::putFile('public/property_images', request()->file('image')[$i]);
-      $property->propertyImages()->create(['name' => str_replace("public/","",$path)]);
+      $data[$i] = $property->propertyImages()->create(['name' => str_replace("public/","",$path)]);
     }
 
-    return $property->propertyImages;
+    return $data;
   }
 
   public function destroy(Property $property, PropertyImage $propertyImage)
