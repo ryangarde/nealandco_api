@@ -27,6 +27,17 @@ class FeaturedPropertiesController extends Controller
     return Property::where('isChosen',1)->get();
   }
 
+  public function storeOne(Property $property)
+  {
+    if(request()->isChosen){
+      $property->fill(['isChosen' => 1])->save();
+    } else {
+      $property->fill(['isChosen' => 0])->save();
+    }
+    
+    return $property;
+  }
+
   public function show(Property $property)
   {
     return $property;

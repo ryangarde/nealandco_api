@@ -66,6 +66,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::group(['prefix' => 'featured-properties'], function() {
       Route::get('/', 'FeaturedPropertiesController@index');
       Route::post('/', 'FeaturedPropertiesController@store');
+      Route::patch('/{property}', 'FeaturedPropertiesController@storeOne');
       Route::post('/{property}', 'FeaturedPropertiesController@destroy');
     });
 
