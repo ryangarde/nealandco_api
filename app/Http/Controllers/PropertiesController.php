@@ -12,7 +12,9 @@ class PropertiesController extends Controller
 {
   public function index()
   {
-    return Property::all();
+    $data = Property::all();
+    $featuredPropertiesCount = count(Property::where([['isChosen',1],['isSold',0]])->get());
+    return response()->json(compact('data','featuredPropertiesCount'));
   }
 
   public function indexActive()
@@ -20,12 +22,12 @@ class PropertiesController extends Controller
     return Property::where('isActive',1)->paginate(9);
   }
 
-  public function indexNotSold()
+  public function indexNotDone()
   {
     return Property::where([['isActive',1],['isSold',0]])->with('propertyImages')->paginate(9);
   }
 
-  public function indexNotSoldNoPaginate()
+  public function indexNotDoneNoPaginate()
   {
     return Property::where([['isActive',1],['isSold',0]])->with('propertyImages')->get();
   }
@@ -121,7 +123,7 @@ class PropertiesController extends Controller
     if ($property->isSold == 1)
       $property->fill(['isSold' => 0])->save();
     else
-      $property->fill(['isSold' => 1])->save();
+      $property->fill(['isSold' => 1,'isChosen'=> 0])->save();
     return $property;
   }
 }

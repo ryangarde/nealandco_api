@@ -9,7 +9,7 @@ class FeaturedPropertiesController extends Controller
 {
   public function index()
   {
-    return Property::where([['isSold',0],['isChosen',1]])->get();
+    return Property::where([['isSold',0],['isChosen',1],['isSold',0]])->get();
   }
 
   public function indexActive()

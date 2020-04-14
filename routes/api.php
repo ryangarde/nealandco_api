@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::post('login', 'AuthController@login');
 Route::get('/testimonials', 'TestimonialsController@indexActive');
 Route::get('/featured-properties', 'FeaturedPropertiesController@indexActive');
-Route::get('/properties', 'PropertiesController@indexNotSold');
+Route::get('/properties', 'PropertiesController@indexNotDone');
 Route::get('/properties/types', 'PropertiesController@getTypes');
 Route::get('/properties/statuses', 'PropertiesController@getStatuses');
 Route::get('/properties/prices', 'PropertiesController@getPrices');
@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth:api'], function() {
       Route::post('/{property}/amenities', 'AmenitiesController@store');
       Route::delete('/{property}/amenities/{amenity}', 'AmenitiesController@destroy');
 
-      Route::get('/not-sold', 'PropertiesController@indexNotSoldNoPaginate');
+      Route::get('/not-sold', 'PropertiesController@indexNotDoneNoPaginate');
 
       Route::get('/sold', 'DashboardController@propertiesSold');
       Route::get('/leased', 'DashboardController@propertiesLeased');
