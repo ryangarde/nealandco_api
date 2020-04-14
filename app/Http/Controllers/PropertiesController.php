@@ -95,6 +95,9 @@ class PropertiesController extends Controller
   {
     $properties = Property::with('propertyImages');
 
+    if($request->propertyNumber) 
+      $properties = $properties->where('propertyNumber','like','%'.$request->propertyNumber.'%');
+
     if($request->location) {
       $properties = $properties->where('primaryAddress','like','%'.$request->location.'%')
       ->orWhere('secondaryAddress','like','%'.$request->location.'%');
@@ -112,8 +115,11 @@ class PropertiesController extends Controller
     if($request->bedrooms) 
       $properties = $properties->where('bedrooms', $request->bedrooms);
 
-    if($request->price) 
-      $properties = $properties->whereBetween('price', [$request->minPrice, $request->maxPrice]);
+    if($request->minPrice) 
+      $properties = $properties->where('price','>',$request->minPrice*1000000);
+
+    if($request->maxPrice) 
+      $properties = $properties->where('price','<',$request->maxPrice*1000000);
 
     return $properties->paginate(9);
   }
