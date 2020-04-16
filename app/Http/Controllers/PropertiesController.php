@@ -75,22 +75,12 @@ class PropertiesController extends Controller
   public function getPrices()
   {
     $query = "CAST(price AS DECIMAL(10,2))";
-    $prices = Property::orderByRaw($query)->get();
+    $prices = Property::orderByRaw($query)->where('isSold',0)->pluck('price');
 
-    for($i = 0; $i < count($prices); $i++) {
-      if($i == 0) {
-        $minPrice = floor($prices[$i]['price'] / 1000000);
-      } else if($i == count($prices) - 1) {
-        $maxPrice = ceil($prices[$i]['price'] / 1000000);
-      }
-    }
+    $minPrice = floor($prices[0] / 1000000);
+    $maxPrice = ceil($prices[count($prices) - 1] / 1000000);
 
-    if(count($prices) == 0) {
-      return null;
-    } else if(count($prices) == 1) {
-      $maxPrice = 1;
-    }
-    return ['minPrice' => $minPrice, 'maxPrice' => $maxPrice];
+    return compact('minPrice','maxPrice');
   }
 
   public function search(Request $request)
