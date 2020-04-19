@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Property;
 use App\PropertyImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PropertyImagesController extends Controller
