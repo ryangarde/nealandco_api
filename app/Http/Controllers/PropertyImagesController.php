@@ -17,11 +17,13 @@ class PropertyImagesController extends Controller
 
   public function store(Property $property)
   {
-    DB::transaction(function () {
+    $data = DB::transaction(function () use ($property) {
       for ($i=0; $i < count(request()->image); $i++) { 
         $path = Storage::putFile('public/property_images', request()->file('image')[$i]);
         $data[$i] = $property->propertyImages()->create(['name' => str_replace("public/","",$path)]);
       }
+
+      return $data;
     });
 
     return $data;

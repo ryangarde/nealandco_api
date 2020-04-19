@@ -35,16 +35,18 @@ class PropertiesController extends Controller
   
   public function store()
   {
-    DB::transaction(function () {
+    $data = DB::transaction(function () {
       $property = Property::create(request()->all());
 
       for ($i=0; $i < count(request()->image); $i++) { 
         $path = Storage::putFile('public/property_images', request()->file('image')[$i]);
         $property->propertyImages()->create(['name' => str_replace("public/","",$path)]);
       }
-    });
 
-    return response()->json(['property' => $property,'propertyImages' => $property->propertyImages]);
+      return $data = ['property' => $property, 'propertyImages' => $property->propertyImages];
+    });
+    
+    return response()->json($data);
   }
 
   public function show(Property $property)
