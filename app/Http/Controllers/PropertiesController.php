@@ -6,6 +6,7 @@ use App\Property;
 use App\PropertyStatus;
 use App\PropertyType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PropertiesController extends Controller
