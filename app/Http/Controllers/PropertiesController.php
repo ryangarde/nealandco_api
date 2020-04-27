@@ -49,9 +49,9 @@ class PropertiesController extends Controller
     return response()->json($data);
   }
 
-  public function show(Property $property)
+  public function show($id)
   {
-    return $property;
+    return Property::where('id',$id)->with(['propertyImages','amenities'])->first();
   }
 
   public function update(Property $property)
