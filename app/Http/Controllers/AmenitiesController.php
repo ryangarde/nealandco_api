@@ -16,7 +16,7 @@ class AmenitiesController extends Controller
   public function store(Property $property)
   {
     $property->amenities()->delete();
-    
+    $amenities = [];
     foreach (request()->amenities as $index => $amenity) {
       $amenities[$index] = $property->amenities()->create(['description' => $amenity['description']]);
     }
