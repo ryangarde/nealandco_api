@@ -12,5 +12,5 @@
 */
 
 Route::get('/', function () {
-    return redirect('https://nealandcorealty.com/');
+    return redirect('https://peaceful-chandrasekhar-b5a143.netlify.app/');
 });
