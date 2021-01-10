@@ -15,10 +15,10 @@ class DatabaseSeeder extends Seeder
       $this->call([
         RoleSeeder::class,
         AdminSeeder::class,
-        PropertySeeder::class,
-        PropertySeeder::class,
-        PropertySeeder::class,
-        PropertySeeder::class,
+        // PropertySeeder::class,
+        // PropertySeeder::class,
+        // PropertySeeder::class,
+        // PropertySeeder::class,
         PropertyTypeSeeder::class,
         PropertyStatusSeeder::class,
     ]);
