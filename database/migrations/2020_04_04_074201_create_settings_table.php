@@ -15,9 +15,11 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('emailReceiver')->nullable();
+            $table->string('name')->nullable();
+            $table->string('value')->nullable();
+            // $table->unsignedBigInteger('user_id');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->string('emailReceiver')->nullable();
             $table->timestamps();
         });
     }
