@@ -77,7 +77,7 @@ class PropertiesController extends Controller
 
   public function getPrices()
   {
-    $query = "CAST(price AS DECIMAL(10,2))";
+    $query = "CAST(price AS DECIMAL(15,2))";
     $prices = Property::orderByRaw($query)->where('isSold',0)->pluck('price');
 
     $minPrice = floor($prices[0] / 1000000);
