@@ -19,14 +19,14 @@ class TestimonialsController extends Controller
 
   public function store(Request $request)
   {
-    $path = Storage::putFile('public/testimonial_images', request()->file('image'));
-    
+    // $path = Storage::putFile('public/testimonial_images', request()->file('image'));
+
     return Testimonial::create([
       'name' => $request->name,
       'description' => $request->description,
       'stars' => $request->stars,
       'roundedValue' => ceil(request()->stars),
-      'image' => str_replace("public/","",$path),
+      'image' => $request->image,
     ]);
   }
 
@@ -49,8 +49,7 @@ class TestimonialsController extends Controller
 
   public function updateImage(Testimonial $testimonial)
   {
-    $path = Storage::putFile('public/testimonial_images', request()->file('image'));
-    $testimonial->fill(['image' => str_replace("public/","",$path)])->save();
+    $testimonial->fill(['image' => request()->image])->save();
 
     return $testimonial;
   }
