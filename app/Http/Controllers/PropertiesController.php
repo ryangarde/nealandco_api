@@ -32,20 +32,20 @@ class PropertiesController extends Controller
   {
     return Property::where([['isActive',1],['isSold',0]])->with('propertyImages')->get();
   }
-  
+
   public function store()
   {
     $data = DB::transaction(function () {
       $property = Property::create(request()->all());
 
-      for ($i=0; $i < count(request()->image); $i++) { 
-        $path = Storage::putFile('public/property_images', request()->file('image')[$i]);
-        $property->propertyImages()->create(['name' => str_replace("public/","",$path)]);
+      for ($i=0; $i < count(request()->images); $i++) {
+        // $path = Storage::putFile('public/property_images', request()->file('image')[$i]);
+        $property->propertyImages()->create(['name' => request()->images[$i]]);
       }
 
       return $data = ['property' => $property, 'propertyImages' => $property->propertyImages];
     });
-    
+
     return response()->json($data);
   }
 
@@ -90,7 +90,7 @@ class PropertiesController extends Controller
   {
     $properties = Property::with('propertyImages');
 
-    if($request->propertyNumber) 
+    if($request->propertyNumber)
       $properties = $properties->where('propertyNumber','like','%'.$request->propertyNumber.'%');
 
     if($request->location) {
@@ -98,22 +98,22 @@ class PropertiesController extends Controller
       ->orWhere('secondaryAddress','like','%'.$request->location.'%');
     }
 
-    if($request->status) 
+    if($request->status)
       $properties = $properties->where('status', $request->status);
 
-    if($request->type) 
+    if($request->type)
       $properties = $properties->whereIn('type', $request->type);
 
-    if($request->lotArea) 
+    if($request->lotArea)
       $properties = $properties->whereBetween('lotArea', [$request->lotArea - 100, $request->lotArea + 100]);
 
-    if($request->bedrooms) 
+    if($request->bedrooms)
       $properties = $properties->where('bedrooms', $request->bedrooms);
 
-    if($request->minPrice) 
+    if($request->minPrice)
       $properties = $properties->where('price','>',$request->minPrice*1000000);
 
-    if($request->maxPrice) 
+    if($request->maxPrice)
       $properties = $properties->where('price','<',$request->maxPrice*1000000);
 
     return $properties->paginate(9);

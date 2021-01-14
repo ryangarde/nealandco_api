@@ -15,7 +15,7 @@ class CreatePropertyImagesTable extends Migration
     {
         Schema::create('property_images', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->longText('name');
             $table->unsignedBigInteger('property_id');
             $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
             $table->timestamps();
