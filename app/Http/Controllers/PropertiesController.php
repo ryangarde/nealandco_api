@@ -39,8 +39,8 @@ class PropertiesController extends Controller
       $property = Property::create(request()->all());
 
       for ($i=0; $i < count(request()->images); $i++) {
-        // $path = Storage::putFile('public/property_images', request()->file('image')[$i]);
-        $property->propertyImages()->create(['name' => request()->images[$i]]);
+        $path = Storage::putFile('public/property_images', request()->file('images')[$i]);
+        $property->propertyImages()->create(['name' => str_replace('public/', '', $path)]);
       }
 
       return $data = ['property' => $property, 'propertyImages' => $property->propertyImages];
@@ -51,7 +51,8 @@ class PropertiesController extends Controller
 
   public function show($id)
   {
-    return Property::where('id',$id)->with(['propertyImages','amenities'])->first();
+    $property = Property::where('id',$id)->with(['propertyImages','amenities'])->first();
+    return $property;
   }
 
   public function update(Property $property)

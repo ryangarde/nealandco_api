@@ -10,11 +10,11 @@ class SettingsController extends Controller
   public function show()
   {
     $settings = Settings::select('name','value')->get();
-
+    $data = null;
     foreach ($settings as $index => $setting) {
       $data[$setting->name] = $setting->value;
     }
-    
+
     return $data;
     // return Settings::select('emailReceiver','facebookLink','instagramLink','youtubeLink','twitterLink','linkedInLink')->first();
   }

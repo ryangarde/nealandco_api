@@ -23,6 +23,7 @@ Route::get('/properties/prices', 'PropertiesController@getPrices');
 Route::post('/properties/search', 'PropertiesController@search');
 Route::get('/properties/{property}', 'PropertiesController@show');
 Route::get('/properties/{property}/images', 'PropertyImagesController@index');
+Route::get('/properties/image/{propertyImage}', 'PropertyImagesController@showImage');
 Route::get('/properties/{property}/amenities', 'AmenitiesController@index');
 Route::post('/mail/offer-property', 'MailController@offerProperty');
 Route::post('/mail/book-a-viewing', 'MailController@bookAViewing');
