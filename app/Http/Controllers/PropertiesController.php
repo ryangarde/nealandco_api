@@ -37,16 +37,14 @@ class PropertiesController extends Controller
   {
     $data = DB::transaction(function () {
       $property = Property::create(request()->all());
-
       for ($i=0; $i < count(request()->images); $i++) {
         $path = Storage::putFile('public/property_images', request()->file('images')[$i]);
-        $property->propertyImages()->create(['name' => str_replace('public/', '', $path)]);
+        $property->propertyImages()->create(['name' => env('APP_URL') . '/storage/' . str_replace('public/', '' ,$path)]);
       }
-
-      return $data = ['property' => $property, 'propertyImages' => $property->propertyImages];
+      return $property->load(['propertyImages','amenities']);
     });
 
-    return response()->json($data);
+    return $data;
   }
 
   public function show($id)

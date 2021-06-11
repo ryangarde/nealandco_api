@@ -10,6 +10,8 @@ class Property extends Model
   'lotArea','floorArea','bedrooms','bathrooms','garage','price','description',
   'isActive','isChosen','isSold'];
 
+  protected $with = ['propertyImages','amenities'];
+
   public function propertyImages()
   {
     return $this->hasMany(PropertyImage::class);

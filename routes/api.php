@@ -29,6 +29,8 @@ Route::post('/mail/offer-property', 'MailController@offerProperty');
 Route::post('/mail/book-a-viewing', 'MailController@bookAViewing');
 Route::post('/mail/inquire-properties', 'MailController@inquireProperties');
 Route::get('/settings', 'SettingsController@show');
+Route::get('/blogs', 'BlogController@index');
+Route::get('/blogs/{blog}', 'BlogController@show');
 
 Route::group(['middleware' => 'auth:api'], function() {
   Route::get('user', 'AuthController@user');
@@ -56,12 +58,16 @@ Route::group(['middleware' => 'auth:api'], function() {
     });
 
     Route::group(['prefix' => 'testimonials'], function() {
-      Route::get('/', 'TestimonialsController@index');
-      Route::post('/', 'TestimonialsController@store');
-      Route::get('/{testimonial}', 'TestimonialsController@show');
-      Route::put('/{testimonial}', 'TestimonialsController@update');
+      Route::apiResource('/', 'TestimonialsController');
       Route::post('/{testimonial}/image', 'TestimonialsController@updateImage');
-      Route::delete('/{testimonial}', 'TestimonialsController@destroy');
+    });
+
+    Route::group(['prefix' => 'blogs'], function () {
+      Route::get('/{blog:slug}', 'BlogController@show');
+      Route::delete('/{blog}', 'BlogController@destroy');
+      Route::post('/{blog}/update', 'BlogController@update');
+      Route::get('/', 'BlogController@index');
+      Route::post('/', 'BlogController@store');
     });
 
     Route::group(['prefix' => 'featured-properties'], function() {
