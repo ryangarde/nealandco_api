@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,5 +14,5 @@
 */
 
 Route::get('/', function () {
-    return redirect('https://peaceful-chandrasekhar-b5a143.netlify.app/');
+    return view('welcome');
 });

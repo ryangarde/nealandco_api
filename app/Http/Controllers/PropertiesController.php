@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Property;
-use App\PropertyStatus;
-use App\PropertyType;
+use App\Models\Property;
+use App\Models\PropertyStatus;
+use App\Models\PropertyType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;

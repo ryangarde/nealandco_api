@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\BookAViewing;
 use App\Mail\InquireProperties;
 use App\Mail\OfferProperty;
-use App\Settings;
+use App\Models\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -72,7 +72,7 @@ class MailController extends Controller
         'contactNumber' => 'required|numeric',
       ]);
     }
-    
+
     if($request->origin == 'Inquire Property') {
       $request->validate([
         'emailAddress' => 'required|email',

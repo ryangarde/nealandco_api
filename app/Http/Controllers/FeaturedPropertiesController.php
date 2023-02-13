@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Property;
+use App\Models\Property;
 use Illuminate\Http\Request;
 
 class FeaturedPropertiesController extends Controller
@@ -23,7 +23,7 @@ class FeaturedPropertiesController extends Controller
     foreach (request()->properties as $property) {
       Property::where('id',$property['id'])->update(['isChosen'=>1]);
     }
-    
+
     return Property::where('isChosen',1)->get();
   }
 
@@ -34,7 +34,7 @@ class FeaturedPropertiesController extends Controller
     } else {
       $property->fill(['isChosen' => 0])->save();
     }
-    
+
     return $property;
   }
 

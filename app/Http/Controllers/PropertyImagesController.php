@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Property;
-use App\PropertyImage;
+use App\Models\Property;
+use App\Models\PropertyImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;

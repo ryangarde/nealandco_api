@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Testimonial;
+
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
